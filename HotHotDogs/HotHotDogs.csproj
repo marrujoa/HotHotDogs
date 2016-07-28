@@ -89,6 +89,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\Components\xamarin.mobile-0.7.7\lib\ios-unified\Xamarin.Mobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json" />
@@ -98,6 +101,7 @@
     <Folder Include="Resources\" />
     <Folder Include="DataSources\" />
     <Folder Include="Cells\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -124,12 +128,33 @@
       <DependentUpon>HotDogTableViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Cells\HotDogListCell.cs" />
+    <Compile Include="VeggieLoversTableViewController.cs" />
+    <Compile Include="VeggieLoversTableViewController.designer.cs">
+      <DependentUpon>VeggieLoversTableViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FavoriteTableViewController.cs" />
+    <Compile Include="FavoriteTableViewController.designer.cs">
+      <DependentUpon>FavoriteTableViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MeatLoversTableViewController.cs" />
+    <Compile Include="MeatLoversTableViewController.designer.cs">
+      <DependentUpon>MeatLoversTableViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RaysHotDogs.Core\RaysHotDogs.Core.csproj">
       <Project>{AE2EC9A1-DF47-49DB-AC2C-EE88F635CF6F}</Project>
       <Name>RaysHotDogs.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Eagle.tif" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="xamarin.mobile">
+      <Version>0.7.7</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

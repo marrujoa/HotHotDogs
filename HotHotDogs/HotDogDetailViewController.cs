@@ -13,8 +13,8 @@ namespace HotHotDogs
 
         public HotDogDetailViewController (IntPtr handle) : base (handle)
         {
-			HotDogDataService hotDogDataService = new HotDogDataService();
-			SelectedHotDog = hotDogDataService.GetHotDogById(1);
+			//HotDogDataService hotDogDataService = new HotDogDataService();
+			//SelectedHotDog = hotDogDataService.GetHotDogById(1);
         }
 
 		public override void ViewDidLoad()
@@ -23,10 +23,16 @@ namespace HotHotDogs
 
 			DatabindUI();
 
-			AddToCartButton.TouchUpInside += (object sender, EventArgs e) => {
+			AddToCartButton.TouchUpInside += (object sender, EventArgs e) =>
+			{
 				UIAlertView message = new UIAlertView("HOT HOT DOGS", "That hot dog is added to your order.", null, "OK", null);
 				message.Show();
+
+				this.DismissModalViewController(true);
 			};
+
+			CancelButton.TouchUpInside += (object sender, EventArgs e) => 
+				this.DismissModalViewController(true);
 		}
 
 		private void DatabindUI() {

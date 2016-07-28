@@ -16,6 +16,7 @@ namespace HotHotDogs
 		public HotDogDataSource(List<HotDog> hotDogs, UITableViewController callingController)
 		{
 			this.hotDogs = hotDogs;
+			this.callingController = callingController;
 		}
 
 		public override nint RowsInSection(UITableView tableview, nint section)
@@ -31,19 +32,24 @@ namespace HotHotDogs
 			//	cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
 			//}
 
-			//var hotDog = hotDogs[indexPath.Row];
 			//cell.TextLabel.Text = hotDog.Name;
 			//cell.ImageView.Image = UIImage.FromFile("Images/hotdog" + hotDog.HotDogId + ".jpg");
 
 			//return cell;
+
 			HotDogListCell cell = tableView.DequeueReusableCell(cellIdentifier) as HotDogListCell;
 
 			if (cell == null)
 				cell = new HotDogListCell(cellIdentifier);
-			
-			cell.UpdateCell(hotDogs[indexPath.Row].Name
-							, hotDogs[indexPath.Row].Price.ToString()
-			                , UIImage.FromFile("Images/hotdog" + hotDogs[indexPath.Row].HotDogId + ".jpg") );
+
+			var hotDog = hotDogs[indexPath.Row];
+
+			cell.UpdateCell(
+				hotDog.Name, 
+				hotDog.Price.ToString(), 
+				UIImage.FromFile("Images/hotdog" + hotDog.HotDogId + ".jpg") 
+			);
+
 			return cell;
 		}
 
@@ -51,35 +57,36 @@ namespace HotHotDogs
 				return hotDogs[id];
 		}
 
-		//public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-		//{
-		//	var selectedHotDog = this.hotDogs[indexPath.Row];
+		public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+		{
+			var selectedHotDog = this.hotDogs[indexPath.Row];
+			//callingController.HotDogSelected(selectedHotDog);
+			//tableView.DeselectRow(indexPath, true);
+			var favoritesController = callingController as FavoriteTableViewController;
 
-		//	var favoritesController = callingController as FavoritesViewController;
+			if (favoritesController != null) {
+				favoritesController.HotDogSelected(selectedHotDog);
+				tableView.DeselectRow(indexPath, true);
+				return;
+			}
 
-		//	if (favoritesController != null) {
-		//		favoritesController.HotDogSelected(selectedHotDog);
-		//		tableView.DeselectRow(indexPath, true);
-		//		return;
-		//	}
+			var meatLoversController = callingController as MeatLoversTableViewController;
 
-		//	var meatLoversController = callingController as MeatLoversViewController;
+			if (meatLoversController != null)
+			{
+				meatLoversController.HotDogSelected(selectedHotDog);
+				tableView.DeselectRow(indexPath, true);
+				return;
+			}
 
-		//	if (meatLoversController != null)
-		//	{
-		//		meatLoversController.HotDogSelected(selectedHotDog);
-		//		tableView.DeselectRow(indexPath, true);
-		//		return;
-		//	}
+			var veggieLoversController = callingController as VeggieLoversTableViewController;
 
-		//	var veggieLoversController = callingController as VeggieLoversViewController;
-
-		//	if (veggieLoversController != null)
-		//	{
-		//		veggieLoversController.HotDogSelected(selectedHotDog);
-		//		tableView.DeselectRow(indexPath, true);
-		//		return;
-		//	}
-		//}
+			if (veggieLoversController != null)
+			{
+				veggieLoversController.HotDogSelected(selectedHotDog);
+				tableView.DeselectRow(indexPath, true);
+				return;
+			}
+		}
 	}
 }

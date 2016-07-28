@@ -29,14 +29,31 @@ namespace HotHotDogs
 		{
 			base.PrepareForSegue(segue, sender);
 
-			if (segue.Identifier == "HotDogDetailSegue") {
-				var hotDogDetailViewController = segue.DestinationViewController as HotDogDetailViewController;
-				if (hotDogDetailViewController != null) {
-					var source = TableView.Source as HotDogDataSource;
-					var rowPath = TableView.IndexPathForSelectedRow;
-					var item = source.GetItem(rowPath.Row);
-					hotDogDetailViewController.SelectedHotDog = item;
-				}
+			//if (segue.Identifier == "HotDogDetailSegue")
+			//{
+			//	var hotDogDetailViewController = segue.DestinationViewController as HotDogDetailViewController;
+			//	if (hotDogDetailViewController != null)
+			//	{
+			//		var source = TableView.Source as HotDogDataSource;
+			//		var rowPath = TableView.IndexPathForSelectedRow;
+			//		var item = source.GetItem(rowPath.Row);
+			//		hotDogDetailViewController.SelectedHotDog = item;
+			//	}
+			//}
+		}
+
+		public async void HotDogSelected(HotDog selectedHotDog)
+		{
+			HotDogDetailViewController detailController =
+				this.Storyboard.InstantiateViewController("HotDogDetailViewController") as HotDogDetailViewController;
+
+			if (detailController != null)
+			{
+				detailController.ModalTransitionStyle = UIModalTransitionStyle.PartialCurl;
+
+				detailController.SelectedHotDog = selectedHotDog;
+
+				await PresentViewControllerAsync(detailController, true);
 			}
 		}
     }
